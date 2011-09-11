@@ -1,0 +1,20 @@
+EECE 311 Laboratory Project #1
+* run using: ngspice -b lab1.ckt
+* http://www.ecst.csuchico.edu/~hma/Lab1.311.pdf
+
+VS1 1 0 DC 100V
+R3 1 2 3
+R10 1 6 10
+VSENS 6 5 DC 0V
+R4 2 3 4
+IS3 2 3 DC 3.483
+R12 3 0 12
+F1 3 4 VSENS 0.3
+R41 4 0 4
+R2 4 5 2
+IS2 0 5 DC 2
+
+.DC IS2 2 2 1
+.PRINT DC V(4)
+
+.END
