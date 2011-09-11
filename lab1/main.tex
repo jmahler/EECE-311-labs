@@ -1,0 +1,413 @@
+
+%
+% # INTRODUCTION:
+%
+% This write up is for Lab2: Verification of Equivalent Logic Functions
+%
+% Specifically this was used for the class Linear Circuits II (EECE 311)
+% taught by Hede Ma [http://www.ecst.csuchico.edu/~hma/]
+% during the Fall 2011 semester at CSU Chico [www.csuchico.edu].
+% 
+% ## LaTeX
+%
+% This file is written for LaTeX [http://www.latex-project.org/]
+% which is used to process this file in to a completely formatted
+% document.
+%
+% If you are unfamiliar with LaTeX it can seem daunting at first
+% (as with anything new) but there are many benefits.
+% Imagine writing a document in Word except without
+% having to worry about the tedious things such as line breaks,
+% indentation, table of contents, appendices, font styles,
+% heading sizes, citations/references, page numbers.
+% LaTeX lets you focus on the content without
+% worrying about the tedious details.  It is also excellent for
+% producing mathematical formulas.
+% 
+% If you are collaborating with someone else you can simply edit
+% the sections and paragraphs in this file as needed.
+%
+% To process this file use a command such as 'rubber'.
+%
+%   bash$ rubber skel.tex
+%   (output to skel.dvi)
+%   bash% rubber --pdf skel.tex
+%   (output to skel.pdf)
+%
+% # AUTHORS (of this template):
+%
+%   Jeremiah Mahler <jmmahler@gmail.com>
+%   https://www.google.com/profiles/jmmahler#about 
+%
+% # COPYRIGHT:
+%
+%   Copyright (C)  2011 Jeremiah Mahler <jmmahler@gmail.com>.
+%   Permission is granted to copy, distribute and/or modify this document
+%   under the terms of the GNU Free Documentation License, Version 1.3
+%   or any later version published by the Free Software Foundation;
+%   with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+%   A copy of the license is included in the file "fdl-1.3.txt".
+%
+
+%\documentclass[12pt]{article}
+\documentclass{article}
+%\documentclass[10pt]{article}
+
+%\usepackage{mslapa}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{ulem}
+%\usepackage{vmargin}
+\usepackage{tabularx}
+\usepackage{sectsty}
+\usepackage{pbox}
+\usepackage{bigstrut}
+\usepackage{enumerate}
+\usepackage{listings}
+\usepackage{parskip}  % space paragraphs but dont indent
+
+%\usepackage{cleveref}
+
+%\setpapersize{USletter}
+\sectionfont{\normalsize}
+\subsectionfont{\normalsize}
+
+% configure \bigstrut size
+% This configures spacing above and below rows in a tabularx.
+%\renewcommand{\bigstrutjot}{6pt}
+\renewcommand{\bigstrutjot}{2.0\jot}
+
+%\setlength{\parindent}{0in}
+%\setlength{\parindent}{1.5ex}
+%\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\raggedright
+
+\begin{document}
+
+% If a figure is too long to fit in a figure on a single page
+% it should got in its own section in the Appendix.
+
+% {{{ Cover Page
+
+\centerline{\bf EECE 311}
+\centerline{\bf Fall 2011}
+\centerline{\bf}
+\centerline{\bf Lab Report \#1}
+\centerline{\bf Using SPICE for Electric Circuit Analysis}
+%\centerline{\bf Section 4}
+%\centerline{\bf 9/13/2011} % date turned in
+\centerline{\bf 9/6/2011}  % date lab performed
+
+% signature area
+\begin{center}
+\begin{tabularx}{\textwidth}[b]{X l l}
+Submitted by: & & \\
+Signature & Printed Name & Date \\
+\hline
+\multicolumn{1}{|X|}{} & \multicolumn{1}{|l|}{\bigstrut \bf Jeremiah Mahler} & \multicolumn{1}{|l|}{\bf Sep 13, 2011} \\
+\hline
+%\multicolumn{1}{|X|}{} & \multicolumn{1}{|l|}{\bigstrut \bf Marvanee Johnson} & \multicolumn{1}{|l|}{\bf Sep 14, 2011} \\
+%\hline
+\end{tabularx}
+\end{center}
+% }}}
+
+% {{{ Description/Objectives
+\section{Description/Objectives}
+
+The objective of this lab is to experiment with a SPICE simulation
+of a circuit which includes dependent voltage/current sources.
+
+% }}}
+
+% {{{ Procedure
+\section{Procedure}
+
+Shown in Figure \ref{fig:circuit} is the graphical representation of the
+ circuit that will be defined in SPICE.
+Appendix \ref{sec:spicedef} shows the SPICE definition of the circuit.
+Figures \ref{fig:spicecur}, \ref{fig:spicecurplot}, \ref{fig:spicevolt},
+and \ref{fig:spicevoltplot} show the text output produced from running
+the SPICE simulation.
+
+Under Linux the simulation can be accomplished using Ngspice \cite{NGSPICE}
+as shown below.
+\begin{verbatim}
+	shell$ # ngspice -b <name of spice file>
+	shell$ ngspice -b lab1.cir
+	(output sent to screen)
+	shell$ ngspice -b lab1.cir > lab1.out
+	(output save to file lab1.out)
+\end{verbatim}
+
+After re-configuring the SPICE definition for interactive output
+(see SPICE definition in Appendix \ref{sec:spicedef}) a graphical plot
+can be produced as in Figure \ref{fig:spicevoltplot}.
+
+\begin{figure}[!hbtp]
+\center
+%\includegraphics[scale=1.0]{Lab1-311-circuit}
+\includegraphics[scale=0.4]{spice/lab1-schematic}
+\caption{Circuit used for SPICE simulation.
+Nodes denoted by numbers with 0 as common.}
+\label{fig:circuit}
+\end{figure}
+
+
+% {{{ fig:spicecur
+\begin{figure}
+{\footnotesize
+\begin{verbatim}
+                         eece 311 laboratory project #1
+                         DC transfer characteristic  Sun Sep 11 11:14:25  2011
+--------------------------------------------------------------------------------
+Index   v-sweep         vs1#branch      vsens#branch    
+--------------------------------------------------------------------------------
+0    0.000000e+00    9.660220e-02    -6.97674e-01    
+1    5.000000e+00    -5.12333e-01    -4.06977e-01    
+2    1.000000e+01    -1.12127e+00    -1.16279e-01    
+3    1.500000e+01    -1.73020e+00    1.744186e-01    
+4    2.000000e+01    -2.33914e+00    4.651163e-01    
+5    2.500000e+01    -2.94807e+00    7.558140e-01    
+6    3.000000e+01    -3.55701e+00    1.046512e+00    
+7    3.500000e+01    -4.16594e+00    1.337209e+00    
+8    4.000000e+01    -4.77488e+00    1.627907e+00    
+9    4.500000e+01    -5.38381e+00    1.918605e+00    
+10   5.000000e+01    -5.99275e+00    2.209302e+00    
+11   5.500000e+01    -6.60168e+00    2.500000e+00    
+12   6.000000e+01    -7.21062e+00    2.790698e+00    
+13   6.500000e+01    -7.81955e+00    3.081395e+00    
+14   7.000000e+01    -8.42849e+00    3.372093e+00    
+15   7.500000e+01    -9.03742e+00    3.662791e+00    
+16   8.000000e+01    -9.64636e+00    3.953488e+00    
+17   8.500000e+01    -1.02553e+01    4.244186e+00    
+18   9.000000e+01    -1.08642e+01    4.534884e+00    
+19   9.500000e+01    -1.14732e+01    4.825581e+00    
+20   1.000000e+02    -1.20821e+01    5.116279e+00    
+\end{verbatim}
+}
+\caption{Tabular current outputs resulting from voltage sweep of VS1.}
+\label{fig:spicecur}
+\end{figure}
+% }}}
+
+% {{{ fig:spicecurplot
+\begin{figure}
+
+{\footnotesize
+\begin{verbatim}
+                      eece 311 laboratory project #1
+           DC transfer characteristic Sun Sep 11 11:14:25  2011
+
+Legend:  + = vs1#branch       
+         * = vsens#branch     
+--------------------------------------------------------------------------
+ v-sweep    vs1#bran-2.00e+01        -1.00e+01         0.00e+00         1.00e+01
+----------------------|----------------|----------------|----------------|
+ 0.000e+00  9.660e-02 .                .              * +                .
+ 5.000e+00 -5.123e-01 .                .               X.                .
+ 1.000e+01 -1.121e+00 .                .              +*.                .
+ 1.500e+01 -1.730e+00 .                .             +  *                .
+ 2.000e+01 -2.339e+00 .                .            +   *                .
+ 2.500e+01 -2.948e+00 .                .          +     .*               .
+ 3.000e+01 -3.557e+00 .                .         +      .*               .
+ 3.500e+01 -4.166e+00 .                .        +       . *              .
+ 4.000e+01 -4.775e+00 .                .       +        . *              .
+ 4.500e+01 -5.384e+00 .                .      +         .  *             .
+ 5.000e+01 -5.993e+00 .                .     +          .  *             .
+ 5.500e+01 -6.602e+00 .                .    +           .   *            .
+ 6.000e+01 -7.211e+00 .                .   +            .   *            .
+ 6.500e+01 -7.820e+00 .                .  +             .    *           .
+ 7.000e+01 -8.428e+00 .                . +              .    *           .
+ 7.500e+01 -9.037e+00 .                .+               .     *          .
+ 8.000e+01 -9.646e+00 .                +                .     *          .
+ 8.500e+01 -1.026e+01 .               +.                .      *         .
+ 9.000e+01 -1.086e+01 .              + .                .      *         .
+ 9.500e+01 -1.147e+01 .             +  .                .       *        .
+ 1.000e+02 -1.208e+01 .            +   .                .       *        .
+----------------------|----------------|----------------|----------------|
+ v-sweep    vs1#bran-2.00e+01        -1.00e+01         0.00e+00         1.00e+01
+\end{verbatim}
+}
+
+\caption{Textual plot of current outputs resulting from voltage sweep of VS1.}
+\label{fig:spicecurplot}
+\end{figure}
+% }}}
+
+% {{{ fig:spicevolt
+\begin{figure}
+{\footnotesize
+\begin{verbatim}
+                         eece 311 laboratory project #1
+                         DC transfer characteristic  Sun Sep 11 11:14:25  2011
+--------------------------------------------------------------------------------
+Index   v-sweep         v(3)            v(4)            v(5)            
+--------------------------------------------------------------------------------
+0    0.000000e+00    9.724494e+00    4.372093e+00    6.976744e+00    
+1    5.000000e+00    1.249683e+01    5.883721e+00    9.069767e+00    
+2    1.000000e+01    1.526917e+01    7.395349e+00    1.116279e+01    
+3    1.500000e+01    1.804151e+01    8.906977e+00    1.325581e+01    
+4    2.000000e+01    2.081385e+01    1.041860e+01    1.534884e+01    
+5    2.500000e+01    2.358618e+01    1.193023e+01    1.744186e+01    
+6    3.000000e+01    2.635852e+01    1.344186e+01    1.953488e+01    
+7    3.500000e+01    2.913086e+01    1.495349e+01    2.162791e+01    
+8    4.000000e+01    3.190320e+01    1.646512e+01    2.372093e+01    
+9    4.500000e+01    3.467553e+01    1.797674e+01    2.581395e+01    
+10   5.000000e+01    3.744787e+01    1.948837e+01    2.790698e+01    
+11   5.500000e+01    4.022021e+01    2.100000e+01    3.000000e+01    
+12   6.000000e+01    4.299255e+01    2.251163e+01    3.209302e+01    
+13   6.500000e+01    4.576489e+01    2.402326e+01    3.418605e+01    
+14   7.000000e+01    4.853722e+01    2.553488e+01    3.627907e+01    
+15   7.500000e+01    5.130956e+01    2.704651e+01    3.837209e+01    
+16   8.000000e+01    5.408190e+01    2.855814e+01    4.046512e+01    
+17   8.500000e+01    5.685424e+01    3.006977e+01    4.255814e+01    
+18   9.000000e+01    5.962658e+01    3.158140e+01    4.465116e+01    
+19   9.500000e+01    6.239891e+01    3.309302e+01    4.674419e+01    
+20   1.000000e+02    6.517125e+01    3.460465e+01    4.883721e+01    
+\end{verbatim}
+}
+\caption{Tabular voltage outputs resulting from voltage sweep of VS1.}
+\label{fig:spicevolt}
+\end{figure}
+% }}}
+
+% {{{ fig:spicevoltplot
+\begin{figure}
+{\footnotesize
+\begin{verbatim}
+                      eece 311 laboratory project #1
+           DC transfer characteristic Sun Sep 11 11:14:25  2011
+
+Legend:  + = v(1)             
+         * = v(3)             
+         = = v(4)             
+         $ = v(5)             
+--------------------------------------------------------------------------
+ v-sweep    v(1)     0.00e+00  2.00e+03  4.00e+03  6.00e+03  8.00e+03  1.00e+04 
+----------------------|---------|---------|---------|---------|---------|
+ 0.000e+00  0.000e+00 + =$*     .         .         .         .         . 
+ 5.000e+00  5.000e+00 . X $ *   .         .         .         .         . 
+ 1.000e+01  1.000e+01 .  = X *  .         .         .         .         . 
+ 1.500e+01  1.500e+01 .   = $+ *.         .         .         .         . 
+ 2.000e+01  2.000e+01 .    = $  X         .         .         .         . 
+ 2.500e+01  2.500e+01 .    =  $ .*+       .         .         .         . 
+ 3.000e+01  3.000e+01 .     =  $.  * +    .         .         .         . 
+ 3.500e+01  3.500e+01 .      =  $   *  +  .         .         .         . 
+ 4.000e+01  4.000e+01 .       = .$   *    +         .         .         . 
+ 4.500e+01  4.500e+01 .       = . $    *  . +       .         .         . 
+ 5.000e+01  5.000e+01 .        =.  $    * .    +    .         .         . 
+ 5.500e+01  5.500e+01 .         =   $     *      +  .         .         . 
+ 6.000e+01  6.000e+01 .         .=    $   .*        +         .         . 
+ 6.500e+01  6.500e+01 .         . =    $  . *       . +       .         . 
+ 7.000e+01  7.000e+01 .         . =     $ .   *     .    +    .         . 
+ 7.500e+01  7.500e+01 .         .  =     $.    *    .      +  .         . 
+ 8.000e+01  8.000e+01 .         .   =     $      *  .         +         . 
+ 8.500e+01  8.500e+01 .         .    =    .$      * .         . +       . 
+ 9.000e+01  9.000e+01 .         .    =    . $      *.         .    +    . 
+ 9.500e+01  9.500e+01 .         .     =   .  $      .*        .      +  . 
+ 1.000e+02  1.000e+02 .         .      =  .   $     . *       .         + 
+----------------------|---------|---------|---------|---------|---------|
+ v-sweep    v(1)     0.00e+00  2.00e+03  4.00e+03  6.00e+03  8.00e+03  1.00e+04 
+\end{verbatim}
+}
+\caption{Textual plot of voltage outputs resulting from voltage sweep of VS1.}
+\label{fig:spicevoltplot}
+\end{figure}
+% }}}
+
+\begin{figure}[!hbtp]
+\center
+\includegraphics[scale=1.0]{spice/lab1-plot}
+\caption{Graphical plot of SPICE simulation.}
+\label{fig:spiceguiplot}
+\end{figure}
+
+\clearpage
+% }}}
+
+\section{Observations}
+
+\section{Conclusion}
+
+\clearpage
+
+\pagebreak
+\renewcommand*{\refname}{\vspace{-8mm}}
+\section{References}
+\bibliographystyle{ieeetr}
+\bibliography{../references}
+
+% {{{ Appendix
+\appendix
+
+% {{{ sec:spicedef
+
+\section{SPICE definition}\label{sec:spicedef}
+% spice/lab1.cir
+
+{\footnotesize
+\begin{verbatim}
+EECE 311 Laboratory Project #1
+* run using: ngspice -b lab1.cir
+* http://www.ecst.csuchico.edu/~hma/Lab1.311.pdf
+
+VS1 1 0 DC 100V
+R1 1 2 3
+R2 2 3 4
+I1 2 3 DC 3.483
+
+R3 1 6 10
+VSENS 6 5 DC 0V
+F1 3 4 VSENS 0.3
+
+R4 3 0 12
+R5 4 0 4
+R6 4 5 2
+I2 0 5 DC 2
+
+* Uncomment the section for the mode your are using.
+********> -b (batch mode) <********
+** ngspice -b <this file>
+
+* sweep VS1 from 0 volts to 100 volts in 5 volt increments
+*.DC VS1 0V 100V 5V
+
+*.PRINT DC I(VS1) I(VSENS)
+*.PLOT DC I(VS1) I(VSENS)
+*.PRINT DC I(R1) I(R2) I(R3) I(R4) I(R5) I(R6)
+*.PRINT DC V(3) V(4) V(5)
+*.PLOT DC V(1) V(3) V(4) V(5)
+*.PROBE
+*.HARDCOPY lab1.eps DC V(1) V(3) V(4) V(5)
+*.gnuplot lab1.gnuplot DC V(1) V(3) V(4) V(5)
+*.END
+******> interacitve mode <*********
+** ngspice <this file>
+
+.CONTROL
+
+DC VS1 0V 100V 5V
+
+* gui plot
+*PLOT V(1) V(2) V(3) V(4) V(5)
+GNUPLOT lab1-plot I(VS1) I(VSENS) V(1) V(2) V(3) V(4) V(5)
+* gnuplot -persist lab1-plot.plt
+* outputs to lab1-plot.eps
+
+.ENDC
+.END
+***********************************
+* vim:syntax=spice
+
+\end{verbatim}
+}
+% }}}
+
+% }}}
+
+\end{document}
+
+% vim:foldmethod=marker

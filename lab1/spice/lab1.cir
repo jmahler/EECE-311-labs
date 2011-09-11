@@ -1,0 +1,53 @@
+EECE 311 Laboratory Project #1
+* run using: ngspice -b lab1.cir
+* http://www.ecst.csuchico.edu/~hma/Lab1.311.pdf
+
+VS1 1 0 DC 100V
+R1 1 2 3
+R2 2 3 4
+I1 2 3 DC 3.483
+
+R3 1 6 10
+VSENS 6 5 DC 0V
+F1 3 4 VSENS 0.3
+
+R4 3 0 12
+R5 4 0 4
+R6 4 5 2
+I2 0 5 DC 2
+
+* Uncomment the section for the mode your are using.
+********> -b (batch mode) <********
+** ngspice -b <this file>
+
+* sweep VS1 from 0 volts to 100 volts in 5 volt increments
+*.DC VS1 0V 100V 5V
+
+*.PRINT DC I(VS1) I(VSENS)
+*.PLOT DC I(VS1) I(VSENS)
+*.PRINT DC I(R1) I(R2) I(R3) I(R4) I(R5) I(R6)
+*.PRINT DC V(3) V(4) V(5)
+*.PLOT DC V(1) V(3) V(4) V(5)
+*.PROBE
+*.HARDCOPY lab1.eps DC V(1) V(3) V(4) V(5)
+*.gnuplot lab1.gnuplot DC V(1) V(3) V(4) V(5)
+*.END
+******> interacitve mode <*********
+** ngspice <this file>
+
+.CONTROL
+
+DC VS1 0V 100V 5V
+
+* gui plot
+*PLOT V(1) V(2) V(3) V(4) V(5)
+GNUPLOT lab1-plot I(VS1) I(VSENS) V(1) V(2) V(3) V(4) V(5)
+* gnuplot -persist lab1-plot.plt
+* outputs to lab1-plot.eps
+
+.ENDC
+.END
+***********************************
+
+* vim:syntax=spice
+
