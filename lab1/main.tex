@@ -117,34 +117,19 @@ Signature & Printed Name & Date \\
 % {{{ Description/Objectives
 \section{Description/Objectives}
 
-The objective of this lab is to experiment with a SPICE simulation
-of a circuit which includes dependent voltage/current sources.
+
+The objective of this lab is to gain experience simulating and analyzing
+circuits using SPICE simulations.
 
 % }}}
 
 % {{{ Procedure
 \section{Procedure}
 
+In general the procedure involves creating a SPICE definition of the circuit
+and then analyzing the results to produce raw values or plots.
 Shown in Figure \ref{fig:circuit} is the graphical representation of the
- circuit that will be defined in SPICE.
-Appendix \ref{sec:spicedef} shows the SPICE definition of the circuit.
-Figures \ref{fig:spicecur}, \ref{fig:spicecurplot}, \ref{fig:spicevolt},
-and \ref{fig:spicevoltplot} show the text output produced from running
-the SPICE simulation.
-
-Under Linux the simulation can be accomplished using Ngspice \cite{NGSPICE}
-as shown below.
-\begin{verbatim}
-	shell$ # ngspice -b <name of spice file>
-	shell$ ngspice -b lab1.cir
-	(output sent to screen)
-	shell$ ngspice -b lab1.cir > lab1.out
-	(output save to file lab1.out)
-\end{verbatim}
-
-After re-configuring the SPICE definition for interactive output
-(see SPICE definition in Appendix \ref{sec:spicedef}) a graphical plot
-can be produced as in Figure \ref{fig:spicevoltplot}.
+ circuit that will be used in this lab.
 
 \begin{figure}[!hbtp]
 \center
@@ -155,6 +140,34 @@ Nodes denoted by numbers with 0 as common.}
 \label{fig:circuit}
 \end{figure}
 
+The SPICE definition of the circuit is given in Appendix \ref{sec:spicedef}.
+To run the simulation there are various options depending on the platform
+being used.
+Under Windows, the closed source student version of the
+Orcad \cite{ORCAD} simulator can be used.
+It provides a graphical user interface its use is self explanatory.
+Under Linux and Windows the open source Ngspice \cite{NGSPICE}
+simulator can be used.
+Shown in Figure \ref{fig:ngspicelinux} are the commands used under Linux
+to produce all the text based data values and plots of the simulation.
+Figures \ref{fig:spicecur}, \ref{fig:spicecurplot}, \ref{fig:spicevolt},
+and \ref{fig:spicevoltplot} show the textual output produced from running
+the SPICE simulation.
+
+\begin{figure}[!htb]
+{\footnotesize
+\begin{verbatim}
+	shell$ # ngspice -b <name of spice file>
+	shell$ ngspice -b lab1.cir
+	(output sent to screen)
+	shell$ ngspice -b lab1.cir > lab1.out
+	(output save to file lab1.out)
+\end{verbatim}
+}
+\caption{Shell commands for running the SPICE simulation in batch mode (-b)
+using Ngspice under Linux.}
+\label{fig:ngspicelinux}
+\end{figure}
 
 % {{{ fig:spicecur
 \begin{figure}
@@ -318,6 +331,15 @@ Legend:  + = v(1)
 \end{figure}
 % }}}
 
+The SPICE simulation can also be used to produce graphical plot output.
+Using Ngspice the simulation must be re-configured to run in interactive
+mode instead of batch mode so that the plot directives will work
+(see the SPICE definition in Appendix \ref{sec:spicedef} for more information).
+These plots can be displayed on the terminal or output to a file in various
+format (jpg, png, eps, pdf) for inclusion in to a document.
+Shown in Figure \ref{fig:spiceguiplot} is the graphical output
+of this simulation when plotted using Gnuplot \cite{GNUPLOT}.
+
 \begin{figure}[!hbtp]
 \center
 \includegraphics[scale=1.0]{spice/lab1-plot}
@@ -328,10 +350,30 @@ Legend:  + = v(1)
 \clearpage
 % }}}
 
+% {{{ Observations
 \section{Observations}
 
+The various ways of displaying data should corroborate the expected
+and calculated values.
+It can be seen by comparing the textual plot in Figure \ref{fig:spicevoltplot}
+and the graphical plot in Figure \ref{fig:spiceguiplot} that the results
+are the same other than the fact that the vertical axis is inverted.
+The raw data can also be used to view the data in more detail than what
+is available with the plots.
+The textual plots are the least precise and have the largest amount of error 
+compared to graphical plots.
+% }}}
+
+% {{{ Conclusion
 \section{Conclusion}
 
+This lab was a success in gaining experience with the various ways
+to define and analyze circuits using SPICE.
+A single SPICE circuit definition can be used to produce raw data values,
+textual plots or full graphical plots suitable for inclusion in to a document.
+% }}}
+
+% {{{ References
 \clearpage
 
 \pagebreak
@@ -339,6 +381,7 @@ Legend:  + = v(1)
 \section{References}
 \bibliographystyle{ieeetr}
 \bibliography{../references}
+% }}}
 
 % {{{ Appendix
 \appendix
@@ -393,7 +436,7 @@ DC VS1 0V 100V 5V
 
 * gui plot
 *PLOT V(1) V(2) V(3) V(4) V(5)
-GNUPLOT lab1-plot I(VS1) I(VSENS) V(1) V(2) V(3) V(4) V(5)
+GNUPLOT lab1-plot V(1) V(3) V(4) V(5)
 * gnuplot -persist lab1-plot.plt
 * outputs to lab1-plot.eps
 
@@ -411,3 +454,4 @@ GNUPLOT lab1-plot I(VS1) I(VSENS) V(1) V(2) V(3) V(4) V(5)
 \end{document}
 
 % vim:foldmethod=marker
+
