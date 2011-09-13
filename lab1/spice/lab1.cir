@@ -29,8 +29,6 @@ I2 0 5 DC 2
 *.PRINT DC V(3) V(4) V(5)
 *.PLOT DC V(1) V(3) V(4) V(5)
 *.PROBE
-*.HARDCOPY lab1.eps DC V(1) V(3) V(4) V(5)
-*.gnuplot lab1.gnuplot DC V(1) V(3) V(4) V(5)
 *.END
 ******> interacitve mode <*********
 ** ngspice <this file>
