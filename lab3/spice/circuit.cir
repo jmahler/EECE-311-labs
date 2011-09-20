@@ -1,0 +1,25 @@
+EECE 311 Lab 3
+
+V1 1 0 DC 88
+R1 1 2 10
+R2 2 0 50
+R3 2 3 20
+R4 3 0 40
+* Use VSC for short circuit current
+*VSC 2 0 DC 0
+I1 0 3 DC 1
+
+* Thevenin resistance
+*.TF V(2,0) V1
+
+* Open Circuit voltage
+.DC V1 88 88 1
+.PRINT DC V(2)
+
+* short circuit current
+*.DC V1 88 88 1
+*.PRINT DC I(VSC)
+
+.END
+
+

@@ -1,0 +1,28 @@
+
+Circuit: eece 311 lab 3
+
+Doing analysis at TEMP = 27.000000 and TNOM = 27.000000
+
+
+No. of Data Rows : 1
+
+                                 eece 311 lab 3
+                                 DC transfer characteristic  Tue Sep 20 10:52:55  2011
+--------------------------------------------------------------------------------
+Index   v-sweep         v(2)            
+--------------------------------------------------------------------------------
+0    8.800000e+01    6.926829e+01    
+
+CPU time since last call: 0.008 seconds.
+
+Total CPU time: 0.008 seconds.
+
+Total DRAM available = 992.695312 MB.
+DRAM currently available = 188.226562 MB.
+Total ngspice program size = 5.744141 MB.
+Resident set size = 654.000 kB.
+Shared ngspice pages = 517.000 kB.
+Text (code) pages = 1.553711 MB.
+Stack = 0 bytes.
+Library pages = 3.041016 MB.
+
