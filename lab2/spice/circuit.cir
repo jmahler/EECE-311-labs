@@ -1,0 +1,27 @@
+EECE 311 Laboratory Project #2
+* run using: ngspice -b this_file.cir
+
+*  + -
+V1 1 0 DC 50
+
+R1 1 10 6
+VSENS 10 2 DC 0
+
+* current controlled current source
+*  - +
+F1 3 2 VSENS 3
+
+R2 0 2 8
+R3 2 3 2
+R4 0 3 4
+
+* current, in -, out +
+*  - +
+I1 0 3 DC 5
+
+.DC V1 50 50 1
+
+.PRINT DC V(1), V(2), V(3)
+
+.END
+
