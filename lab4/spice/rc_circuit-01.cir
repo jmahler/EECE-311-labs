@@ -1,0 +1,47 @@
+Voltage vs Time, RC circuit
+* See below for instructions for how to run this file.
+
+* Voltage and current source orientations.
+* Vx + -
+* Ix - +  (out +)
+
+V1 1 0 DC 3V
+R1 1 2 2k
+
+* PULSE(min max time_delay rise_time fall_time pulse_width [period])
+*I1 2 0 DC PULSE(0 3mA 0 1NS 1NS 100US 200US)
+* PWL(t0 v0 t1 v1 t2 v2 ...)
+I1 2 0 DC PWL(0 0 0 6mA)
+
+R2 2 3 1k
+R3 3 0 6k
+C1 3 0 1nF
+
+* Uncomment to choose the mode your are running:
+*--> Non-interactive mode <-----------------------------------------------------
+*  ngspice -b rc_circuit-01.cir
+
+** .TRAN step end_time
+*.TRAN 1uS 24uS
+*.PLOT TRAN V(1) V(2) V(3)
+**.PROBE
+
+*--> Interactive mode <---------------------------------------------------------
+*  ngspice rc_circuit-01.cir
+
+.CONTROL
+
+*    step  t_max
+TRAN 1uS   12us
+
+* gui (X11) plot
+*PLOT V(1) V(2) V(3)
+
+GNUPLOT plot-01 V(1) V(2) V(3)
+* gnuplot -persist plot-01.plt
+* (outputs to plot-01.eps)
+QUIT
+
+.ENDC
+*-------------------------------------------------------------------------------
+.END

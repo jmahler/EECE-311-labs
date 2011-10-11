@@ -1,0 +1,44 @@
+RL circuit with alternating source, 169 sin(377 t)
+* See below for instructions for how to run this file.
+
+* Voltage and current source orientations.
+* Vx + -
+* Ix - +  (out +)
+
+* 169 sin(377 t)
+* 377 / (2*pi) [rad] = 60 [Hz]
+* SIN(V0 VA FREQ TD THETA)
+V1 1 0 SIN(0 169 60)
+R1 1 2 10
+L1 2 3 25mH
+VB 3 0 80
+
+* Uncomment to choose the mode your are running:
+*--> Non-interactive mode <-----------------------------------------------------
+*  ngspice -b rc_circuit-01.cir
+
+* .TRAN step end_time
+*.TRAN 200e-6 30ms
+*.TRAN 200e-6 40ms
+*.PLOT TRAN V(1) V(2) V(2,3)
+
+*--> Interactive mode <---------------------------------------------------------
+**  ngspice rc_circuit-01.cir
+*
+.CONTROL
+*
+**    step  t_max
+*TRAN 200e-6 30ms
+TRAN 200e-6 40ms
+*
+** gui (X11) plot
+**PLOT V(1) V(2) V(2,3)
+*
+GNUPLOT rlplot-01 V(1) V(2) V(2,3)
+** gnuplot -persist rlplot-01.plt
+** (outputs to rlplot-01.eps)
+QUIT
+*
+.ENDC
+*-------------------------------------------------------------------------------
+.END
