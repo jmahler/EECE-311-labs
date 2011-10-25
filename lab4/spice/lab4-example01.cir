@@ -1,0 +1,13 @@
+EECE 311, Lab 4, example: pulsed response RLC circuit
+
+* PULSE(min_v max_v time_delay rise_time fall_time pulse_width period)
+V1 1 0 PULSE(-220V 220V 0 1NS 1NS 100US 200US)
+R1 1 2 2
+L1 2 3 50uH
+C1 3 0 10uF
+
+* .TRAN step end_time
+.TRAN 1uS 400uS
+.PROBE
+
+.END
