@@ -1,0 +1,60 @@
+Switched RLC circuit
+
+VS1 1 0 DC 20V
+
+R1 1 2 20k
+R2 0 2 20k
+
+R3 4 5 5
+L1 5 6 10mH IC=0
+
+VS2 6 0 DC 100V
+
+S2 2 3 7 0 SMOD
+S3 4 3 7 0 TMOD
+
+C1 3 0 1uF IC=10V
+
+* pulsed voltage used to trigger switches
+* PULSE(min_v max_v time_delay rise_time fall_time pulse_width period)
+*VP3 7 0 DC PULSE(0V 5V 10MS 5US 5US 10MS 20MS)
+VP3 7 0 DC PULSE(0V 5V 30MS 5US 5US 30MS 60MS)
+R4 7 0 1k
+
+* two switch models:
+* One switches from hi to low, and the other from low to hi.
+* OrCad
+*.MODEL SMOD VSWITCH(RON=0.01   ROFF=105E+5  VON=0.1V VOFF=0V)
+*.MODEL TMOD VSWITCH(RON=105E+5 ROFF=0.01    VON=0.1V VOFF=0V)
+* ngspice
+.MODEL SMOD SW RON=0.01       ROFF=100E+5  VT=1 VH=0.2
+.MODEL TMOD SW RON=100E+5     ROFF=0.01    VT=1 VH=0.2
+
+* Uncomment to select the mode you are using:
+*--> Non-interactive mode <-----------------------------------------------------
+*  ngspice -b <this file>
+
+** .TRAN step end_time
+*.TRAN 5us 20ms UIC
+*.PLOT TRAN V(1) V(2) V(3)
+*.PROBE
+*--> Interactive mode <---------------------------------------------------------
+*  ngspice <this file>
+
+.CONTROL
+
+*TRAN 5us 100ms UIC
+*TRAN 5us 80ms UIC
+TRAN 5us 120ms UIC
+
+* pulsed voltage
+GNUPLOT plot-v7 V(7)
+* capacitor voltage
+GNUPLOT plot-v3 V(3)
+* gnuplot -persist <file.plt> # (outputs to <file.eps>)
+
+QUIT
+
+.ENDC
+*-------------------------------------------------------------------------------
+.END
