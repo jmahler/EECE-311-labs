@@ -36,7 +36,7 @@
 
 \null
 \thispagestyle{empty}
-\vspace{1in}
+\vspace{0.5in}
 \centerline{\bf EECE 311}
 \centerline{\bf Fall 2011}
 \centerline{\bf}
@@ -100,19 +100,20 @@ The switch alternates the capacitor between two parts of the circuit.
 \caption{Circuit definition.
 Nodes denoted by numbers with 0 as common.
 The switch (S1) starts at $t=0^-$ connected from terminals 1 to 2.
-At $t=0$ it disconnects from 1 to 2 and connects to 1 to 3.
+At $t=0$ it disconnects from 1 to 2 and connects from 1 to 3.
 }
 \label{fig:circuit}
 \end{figure}
 
 Unfortunately, due to the limitations of SPICE, the circuit can not be
-implemented directly and must be modified.
-The first difficulty is that there is no single pole double throw (SPDT) switch.
-An equivalent can be accomplished using two single pole single throw (SPST)
+implemented directly and instead must be modified.
+The first difficulty is that there is no single pole double throw (SPDT) switch
+available in SPICE.
+An equivalent can be constructed using two single pole single throw (SPST)
 switches.
-The second problem is that switches cannot be triggered by time, they
-can only be triggered by voltage changes.
-The effect of triggering over time be accomplished using a pulsing voltage.
+The second problem is that switches cannot be triggered over time.
+They can however be triggered by voltage changes and it is possible
+to change voltages over time by using a pulse.
 In order to read this pulsing voltage without disrupting the circuit being
 analyzed an additional circuit will be added.
 The modified version of this circuit is shown in Figure \ref{fig:circuit-02}.
@@ -157,14 +158,15 @@ To save the output to a file a redirect can be used as in:
 % {{{ Results
 \section{Results}
 
-To assist in the analysis the time period was adjusted so
-that a steady state was reached before the circuit was situated.
-This also made it match the initial conditions.
+As the switch moves back and forth between its two positions
+it produces a waveform of a constant pulse width.
+Each transition can be analyzed as a step response with some
+initial conditions.
 Figure \ref{fig:capv} shows the voltage across the capacitor
 during two periods.
 It can be seen that there are two components: the under-damped RLC component
 which oscillates rapidly and the RC component which gradually changes
-without oscillation.
+decays without oscillation.
 
 \begin{figure}
 \center
@@ -200,7 +202,7 @@ is active and similarly for the right hand side.
 
 Starting with the left hand side (Figure \ref{fig:circuit-03}) this
 circuit is equivalent to a RC circuit with a forced voltage.
-Construction the equation for the step response of an RC circuit
+Construction of the equation for the step response of an RC circuit
 results in Equation \ref{eq:rcstep}.
 Substitution a time period of 20 ms results in a value of 22.1 volts
 which is nearly the same as the value in Figure \ref{fig:capv}.
@@ -216,7 +218,7 @@ which is nearly the same as the value in Figure \ref{fig:capv}.
 The right hand side of (Figure \ref{fig:circuit-03}) behaves like a
 under-damped series RLC circuit with a forced component as can be seen by the rapid
 oscillations in Figure \ref{fig:capv}.
-Solving the equations results in the following:
+And solving this circuit results in the equation \ref{eq:rlc}.
 
 \begin{align*}
 	\alpha &= \frac{R}{2L} \\
@@ -246,9 +248,6 @@ Solving the equations results in the following:
 
 And substituting values in to Equation \ref{eq:rlc} shows that it behaves
 approximately according to figure \ref{fig:capv}.
-
-\begin{align*}
-\end{align*}
 
 \clearpage
 
